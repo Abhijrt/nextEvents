@@ -1,6 +1,11 @@
-function FilteredEventPage () {
+import { useRef } from 'react';
+
+function FilteredEventPage (props) {
+
+
     return <div>
-        <h1>All event</h1>
+
+        Slug
     </div>
 }
 
