@@ -13,3 +13,8 @@ export default function HomePage() {
     </div>
   )
 }
+
+
+export async function getStaticProps() {
+  
+}
