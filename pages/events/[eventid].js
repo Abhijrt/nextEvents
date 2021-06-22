@@ -8,24 +8,16 @@ import EventContent from '../../components/event-detail/event-content';
 import Button from '../../components/ui/button';
 import ErrorAlert from '../../components/ui/error-alert';
 
-import { getEventById } from '../../dummy-data';
+import { getAllEvents, getEventById } from '../../helpers/api-utils';
 
-function EventDetailPage () {
-    const router = useRouter();
 
-    const eventId = router.query.eventid;
-
-    const event = getEventById(eventId);
+function EventDetailPage (props) {
+    const event = props.event;
 
     if(!event) {
-        return <Fragment>
-        <ErrorAlert>
-        <p>No Event Fount !</p>
-        </ErrorAlert>
-        <div className="center">
-            <Button link='/events'>Show All Event</Button>
+        return <div className="center">
+          <p>Loading....</p>
         </div>
-    </Fragment>
     }
 
     return (
@@ -43,5 +35,36 @@ function EventDetailPage () {
     </Fragment>
     )
 }
+
+
+
+export async function getStaticProps(context) {
+
+  const params = context.parmas;
+  const eventId = params.eventid;
+
+  const event = getEventById(eventId);
+
+  return {
+    props: {
+      event: event
+    },
+    revalidate: 1800
+  }
+}
+
+export async function getStaticPaths(context) {
+
+  const allEvents = await getAllEvents();
+
+  const paths = allEvents.map((event) => ({ params : { eventid : event.id }}));
+
+  return {
+    paths: paths,
+    fallback: false
+  }
+}
+
+
 
 export default EventDetailPage;
