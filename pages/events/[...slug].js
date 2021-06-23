@@ -5,6 +5,7 @@ import { getFilteredEvents } from '../../dummy-data';
 import  ResultsTitle from '../../components/events/results-title';
 import Button from '../../components/ui/button';
 import ErrorAlert from '../../components/ui/error-alert';
+import useSwr from 'useswr';
 
 function FilteredEventPage (props) {
 
