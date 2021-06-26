@@ -5,7 +5,7 @@ import { getFilteredEvents } from '../../dummy-data';
 import  ResultsTitle from '../../components/events/results-title';
 import Button from '../../components/ui/button';
 import ErrorAlert from '../../components/ui/error-alert';
-import useSwr from 'useswr';
+import useSWR from 'swr';
 
 function FilteredEventPage (props) {
 
@@ -14,6 +14,7 @@ function FilteredEventPage (props) {
     const router = useRouter();
 
     const filteredData = router.query.slug;
+
     const { data, error } = useSWR(
         'https://nextjs-course-c81cc-default-rtdb.firebaseio.com/events.json'
     );
@@ -29,11 +30,11 @@ function FilteredEventPage (props) {
               });
             }
       
-            setLoadedEvents(events);
+            setLoadingEvents(events);
         }
     }, [data]);
 
-    if(!loadedEvents) {
+    if(!loadingEvents) {
         return <p className="center">Loading.... </p>
     }
 
@@ -58,7 +59,7 @@ function FilteredEventPage (props) {
     const filterEvents = loadingEvents.filter((event) => {
         const eventDate = new Date(event.data);
         return (
-            eventData.getFullYear() === numYear && 
+            eventDate.getFullYear() === numYear && 
             eventDate.getMonth() === numMonth - 1
         )
     })

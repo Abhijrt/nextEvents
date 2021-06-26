@@ -1,12 +1,11 @@
-import { useRouter } from 'next/router';
 
 import { Fragment } from 'react';
 
 import EventSummary from '../../components/event-detail/event-summary';
 import EventLogistics from '../../components/event-detail/event-logistics';
 import EventContent from '../../components/event-detail/event-content';
-import Button from '../../components/ui/button';
-import ErrorAlert from '../../components/ui/error-alert';
+// import Button from '../../components/ui/button';
+// import ErrorAlert from '../../components/ui/error-alert';
 
 import { getAllEvents, getEventById } from '../../helpers/api-utils';
 
@@ -40,10 +39,10 @@ function EventDetailPage (props) {
 
 export async function getStaticProps(context) {
 
-  const params = context.parmas;
+  const params = context.params;
   const eventId = params.eventid;
 
-  const event = getEventById(eventId);
+  const event = await getEventById(eventId);
 
   return {
     props: {
@@ -53,7 +52,7 @@ export async function getStaticProps(context) {
   }
 }
 
-export async function getStaticPaths(context) {
+export async function getStaticPaths() {
 
   const allEvents = await getAllEvents();
 
