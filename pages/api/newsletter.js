@@ -14,7 +14,8 @@ export default async function handler (req, res) {
             client = await connectDataBase();
         }catch(err) {
             res.status(500).json({
-                message: 'Not Connected to the Database !'
+                message: 'Not Connected to the Database !',
+                error: err
             });
             return;
         }
